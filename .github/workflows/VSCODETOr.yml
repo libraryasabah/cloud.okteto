@@ -41,6 +41,19 @@ jobs:
           sleep 1m
           sudo cat /var/lib/tor/hidden_service/hostname
           sudo sed -n '3'p ~/.config/code-server/config.yaml
-#     - name: Loop
-#      run: |
-#        sleep 90d
+      - name: Loop
+        run: |
+          sleep 1m
+          echo '######### OK #########'
+          sleep 10m
+          echo '######### OK #########'
+          sleep 100m
+          echo '######### OK #########'
+          sleep 1000m
+          echo '######### OK #########'
+          sleep 10000m
+          echo '######### OK #########'
+          sleep 100000m
+          echo '######### OK #########'
+          sleep 1000000m
+          echo '######### OK #########'
