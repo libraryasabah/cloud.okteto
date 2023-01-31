@@ -1,4 +1,4 @@
-name: Tmate
+name: SSHTOr
 on:
   workflow_dispatch:
 
