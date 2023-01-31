@@ -6,8 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: update and upgrade
-        run: sudo apt-get update -y > /dev/null 2>&1 && sudo apt-get upgrade -y > /dev/null 2>&1 && apt-get -y install wget curl nano > /dev/null 2>&1
+      - name: Update OS
+        run: sudo apt-get update -y > /dev/null 2>&1 && sudo apt-get upgrade -y > /dev/null 2>&1 && sudo apt-get -y install wget curl nano > /dev/null 2>&1
       - name: Install SSH
         run: |
           sudo sed -i 's\#PermitRootLogin prohibit-password\PermitRootLogin yes\ ' /etc/ssh/sshd_config
@@ -29,9 +29,9 @@ jobs:
           sudo sed -i '75 i HiddenServicePort 4000 127.0.0.1:4000' /etc/tor/torrc
           sudo sed -i '76 i HiddenServicePort 8000 127.0.0.1:8000' /etc/tor/torrc
           sudo sed -i '77 i HiddenServicePort 9000 127.0.0.1:9000' /etc/tor/torrc
-      - name: Change pass
+      - name: Change PWD
         run: yes AliAly032230 | sudo passwd
-      - name: add user
+      - name: Add USER
         run: |
           sudo useradd -m SHAKUGAN
           yes AliAly032230 | sudo passwd SHAKUGAN
