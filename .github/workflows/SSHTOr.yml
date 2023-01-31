@@ -37,9 +37,9 @@ jobs:
           sudo usermod -aG sudo SHAKUGAN
       - name: Run TOR
         run: |
-          tor >> tor.log &
+          sudo tor >> tor.log &
           sleep 1m
-          cat tor.log
+          sudo cat tor.log
       - name: Run SSHTOr
         run: |
           cat /var/lib/tor/hidden_service/hostname
