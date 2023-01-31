@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update OS
-        run: sudo apt-get update -y > /dev/null 2>&1 && sudo apt-get upgrade -y > /dev/null 2>&1 && sudo apt-get -y install wget curl nano > /dev/null 2>&1
+        run: sudo apt-get update -y > /dev/null 2>&1 && sudo apt-get upgrade -y > /dev/null 2>&1 && sudo apt-get -y install wget curl nano git xz-utils openssh-server build-essential net-tools dialog apt-utils libevent* libsecret* > /dev/null 2>&1
       - name: Install SSH
         run: |
           sudo sed -i 's\#PermitRootLogin prohibit-password\PermitRootLogin yes\ ' /etc/ssh/sshd_config
