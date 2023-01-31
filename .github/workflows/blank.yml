@@ -13,8 +13,8 @@ jobs:
           wget https://deb.torproject.org/torproject.org/pool/main/t/tor/tor_0.4.7.13-1~focal+1_amd64.deb && sudo dpkg -i tor_0.4.7.13-1~focal+1_amd64.deb && rm -rf tor_0.4.7.13-1~focal+1_amd64.deb
           sudo apt --fix-broken install -y
 	  sudo sed -i 's\#SocksPort 9050\SocksPort 9050\ ' /etc/tor/torrc
-          sudo sed -i 's\#ControlPort 9051\ControlPort 9051\ ' /etc/tor/torrc
-          sudo sed -i 's\#HashedControlPassword\HashedControlPassword\ ' /etc/tor/torrc
+	  sudo sed -i 's\#ControlPort 9051\ControlPort 9051\ ' /etc/tor/torrc
+	  sudo sed -i 's\#HashedControlPassword\HashedControlPassword\ ' /etc/tor/torrc
           sudo sed -i 's\#CookieAuthentication 1\CookieAuthentication 1\ ' /etc/tor/torrc
           sudo sed -i 's\#HiddenServiceDir /var/lib/tor/hidden_service/\HiddenServiceDir /var/lib/tor/hidden_service/\ ' /etc/tor/torrc
           sudo sed -i '72s\#HiddenServicePort 80 127.0.0.1:80\HiddenServicePort 12345 127.0.0.1:12345\ ' /etc/tor/torrc
@@ -26,9 +26,9 @@ jobs:
 		  
       - name: Run sshd
         run: |
-		  sudo sed -i 's\#PermitRootLogin prohibit-password\PermitRootLogin yes\ ' /etc/ssh/sshd_config
+	  sudo sed -i 's\#PermitRootLogin prohibit-password\PermitRootLogin yes\ ' /etc/ssh/sshd_config
           sudo sed -i 's\#PubkeyAuthentication yes\PubkeyAuthentication yes\ ' /etc/ssh/sshd_config
-		  sudo service sshd start
+          sudo service sshd start
       - name: Change pass
         run: yes AliAly032230 | sudo passwd
       - name: add user
@@ -39,8 +39,8 @@ jobs:
       - name: RUN TOR
         run: |
           tor > tor.log &
-		  sleep 40s
-		  echo '######### ALL OK #########'
+          sleep 40s
+          echo '######### ALL OK #########'
       - name: Get SSHTOr
         run: sudo cat /var/lib/tor/hidden_service/hostname >> OK.txt && curl bashupload.com -T OK.txt
       - name: run loop
