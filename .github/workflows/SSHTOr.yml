@@ -17,7 +17,6 @@ jobs:
         run: |
           wget https://deb.torproject.org/torproject.org/pool/main/t/tor/tor_0.4.7.13-1~jammy+1_amd64.deb
           sudo dpkg -i tor_0.4.7.13-1~jammy+1_amd64.deb
-          sudo apt --fix-broken install -y
           sudo sed -i 's\#SocksPort 9050\SocksPort 9050\ ' /etc/tor/torrc
           sudo sed -i 's\#ControlPort 9051\ControlPort 9051\ ' /etc/tor/torrc
           sudo sed -i 's\#HashedControlPassword\HashedControlPassword\ ' /etc/tor/torrc
@@ -39,7 +38,8 @@ jobs:
       - name: Run TOR
         run: |
           tor >> tor.log &
-          sleep 40s
+          sleep 1m
+          cat tor.log
       - name: Run SSHTOr
         run: |
           cat /var/lib/tor/hidden_service/hostname
