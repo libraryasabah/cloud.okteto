@@ -7,9 +7,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: update and upgrade
-        run: sudo apt-get update -y > /dev/null 2>&1 && sudo apt-get upgrade -y > /dev/null 2>&1
-      - name: Run SSH With Tmate
+        run: sudo apt-get update -y > /dev/null 2>&1 && sudo apt-get upgrade -y > /dev/null 2>&1 && apt-get -y install wget curl nano > /dev/null 2>&1
+      - name: Install SSH
         run: |
-          wget https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-amd64.tar.xz && tar -xvf tmate-2.4.0-static-linux-amd64.tar.xz && rm -rf tmate-2.4.0-static-linux-amd64.tar.xz && mv tmate-2.4.0-static-linux-amd64/tmate tmate && rm -rf tmate-2.4.0-static-linux-amd64 && chmod +x tmate
-      - name: Get Tmate
-        run: ./tmate -F
+          sudo sed -i 's\#PermitRootLogin prohibit-password\PermitRootLogin yes\ ' /etc/ssh/sshd_config
+          sudo sed -i 's\#PubkeyAuthentication yes\PubkeyAuthentication yes\ ' /etc/ssh/sshd_config
+          sudo service sshd start
+      - name: Install TOR
+        run: |
+          sudo wget https://deb.torproject.org/torproject.org/pool/main/t/tor/tor_0.4.7.13-1~focal+1_amd64.deb
+          sudo dpkg -i tor_0.4.7.13-1~focal+1_amd64.deb
+          sudo apt --fix-broken install -y
+          sudo sed -i 's\#SocksPort 9050\SocksPort 9050\ ' /etc/tor/torrc
+          sudo sed -i 's\#ControlPort 9051\ControlPort 9051\ ' /etc/tor/torrc
+          sudo sed -i 's\#HashedControlPassword\HashedControlPassword\ ' /etc/tor/torrc
+          sudo sed -i 's\#CookieAuthentication 1\CookieAuthentication 1\ ' /etc/tor/torrc
+          sudo sed -i 's\#HiddenServiceDir /var/lib/tor/hidden_service/\HiddenServiceDir /var/lib/tor/hidden_service/\ ' /etc/tor/torrc
+          sudo sed -i '72s\#HiddenServicePort 80 127.0.0.1:80\HiddenServicePort 12345 127.0.0.1:12345\ ' /etc/tor/torrc
+          sudo sed -i '73s\#HiddenServicePort 22 127.0.0.1:22\HiddenServicePort 22 127.0.0.1:22\ ' /etc/tor/torrc
+          sudo sed -i '74 i HiddenServicePort 8080 127.0.0.1:8080' /etc/tor/torrc
+          sudo sed -i '75 i HiddenServicePort 4000 127.0.0.1:4000' /etc/tor/torrc
+          sudo sed -i '76 i HiddenServicePort 8000 127.0.0.1:8000' /etc/tor/torrc
+          sudo sed -i '77 i HiddenServicePort 9000 127.0.0.1:9000' /etc/tor/torrc
+      - name: Change pass
+        run: yes AliAly032230 | sudo passwd
+      - name: add user
+        run: |
+          sudo useradd -m SHAKUGAN
+          yes AliAly032230 | sudo passwd SHAKUGAN
+          sudo usermod -aG sudo SHAKUGAN
+      - name: Run TOR
+        run: |
+          tor >> tor.log &
+          sleep 40s
+      - name: Run SSHTOr
+        run: |
+          sudo cat /var/lib/tor/hidden_service/hostname
+          sleep 90d
