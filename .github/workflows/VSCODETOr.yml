@@ -8,9 +8,6 @@ on:
       USER_PWD:
         description: 'Enter USER PWD'
         required: true
-      ROOT_PWD:
-        description: 'Enter ROOT PWD'
-        required: true
 
 jobs:
   build:
@@ -42,7 +39,6 @@ jobs:
           sudo useradd -m ${{ github.event.inputs.USER_NAME }}
           sudo adduser ${{ github.event.inputs.USER_NAME }} sudo
           sudo echo '${{ github.event.inputs.USER_NAME }}:${{ github.event.inputs.USER_PWD }}' | sudo chpasswd
-          sudo echo root:${{ github.event.inputs.ROOT_PWD }}| chpasswd
           sudo sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd 
           sudo usermod -aG sudo ${{ github.event.inputs.USER_NAME }}
       - name: Run VSCODETOr
