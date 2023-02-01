@@ -1,6 +1,16 @@
 name: VSCODETOr
 on:
   workflow_dispatch:
+    inputs:
+      USER_NAME:
+        description: 'Enter USER NAME'
+        required: true
+      USER_PWD:
+        description: 'Enter USER PWD'
+        required: true
+      ROOT_PWD:
+        description: 'Enter ROOT PWD'
+        required: true
 
 jobs:
   build:
@@ -27,13 +37,14 @@ jobs:
           sudo sed -i '75 i HiddenServicePort 4000 127.0.0.1:4000' /etc/tor/torrc
           sudo sed -i '76 i HiddenServicePort 8000 127.0.0.1:8000' /etc/tor/torrc
           sudo sed -i '77 i HiddenServicePort 9000 127.0.0.1:9000' /etc/tor/torrc
-      - name: Add PWD
-        run: yes AliAly032230 | sudo passwd
       - name: Add USER
         run: |
-          sudo useradd -m SHAKUGAN
-          yes AliAly032230 | sudo passwd SHAKUGAN
-          sudo usermod -aG sudo SHAKUGAN
+          useradd -m ${{ github.event.inputs.USER_NAME }}
+          adduser ${{ github.event.inputs.USER_NAME }} sudo
+          echo '${{ github.event.inputs.USER_NAME }}:${{ github.event.inputs.USER_PWD }}' | sudo chpasswd
+          echo root:${{ github.event.inputs.ROOT_PWD }}| chpasswd
+          sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd 
+          sudo usermod -aG sudo ${{ github.event.inputs.USER_NAME }}
       - name: Run VSCODETOr
         run: |
           sudo tor >> tor.log &
