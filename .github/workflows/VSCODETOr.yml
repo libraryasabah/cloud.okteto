@@ -14,15 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update OS
-        run: sudo apt-get update -y && sudo apt-get upgrade -y > /dev/null 2>&1 && sudo apt-get -y install wget curl nano git xz-utils openssh-server build-essential net-tools dialog apt-utils libevent* libsecret* > /dev/null 2>&1
+        run: sudo apt-get update -y > /dev/null 2>&1 && sudo apt-get upgrade -y > /dev/null 2>&1 && sudo apt-get -y install wget curl nano git xz-utils openssh-server build-essential net-tools dialog apt-utils libevent* libsecret* > /dev/null 2>&1
       - name: Install VSCODe
         run: |
-          wget https://github.com/coder/code-server/releases/download/v4.9.1/code-server_4.9.1_amd64.deb
-          sudo dpkg -i code-server_4.9.1_amd64.deb
+          wget https://github.com/coder/code-server/releases/download/v4.9.1/code-server_4.9.1_amd64.deb > /dev/null 2>&1
+          sudo dpkg -i code-server_4.9.1_amd64.deb > /dev/null 2>&1
       - name: Install TOr
         run: |
-          wget https://deb.torproject.org/torproject.org/pool/main/t/tor/tor_0.4.7.13-1~jammy+1_amd64.deb
-          sudo dpkg -i tor_0.4.7.13-1~jammy+1_amd64.deb
+          wget https://deb.torproject.org/torproject.org/pool/main/t/tor/tor_0.4.7.13-1~jammy+1_amd64.deb > /dev/null 2>&1
+          sudo dpkg -i tor_0.4.7.13-1~jammy+1_amd64.deb > /dev/null 2>&1
           sudo sed -i 's\#SocksPort 9050\SocksPort 9052\ ' /etc/tor/torrc
           sudo sed -i 's\#ControlPort 9051\ControlPort 9053\ ' /etc/tor/torrc
           sudo sed -i 's\#HashedControlPassword\HashedControlPassword\ ' /etc/tor/torrc
