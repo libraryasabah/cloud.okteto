@@ -39,11 +39,11 @@ jobs:
           sudo sed -i '77 i HiddenServicePort 9000 127.0.0.1:9000' /etc/tor/torrc
       - name: Add USER
         run: |
-          useradd -m ${{ github.event.inputs.USER_NAME }}
-          adduser ${{ github.event.inputs.USER_NAME }} sudo
-          echo '${{ github.event.inputs.USER_NAME }}:${{ github.event.inputs.USER_PWD }}' | sudo chpasswd
-          echo root:${{ github.event.inputs.ROOT_PWD }}| chpasswd
-          sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd 
+          sudo useradd -m ${{ github.event.inputs.USER_NAME }}
+          sudo adduser ${{ github.event.inputs.USER_NAME }} sudo
+          sudo echo '${{ github.event.inputs.USER_NAME }}:${{ github.event.inputs.USER_PWD }}' | sudo chpasswd
+          sudo echo root:${{ github.event.inputs.ROOT_PWD }}| chpasswd
+          sudo sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd 
           sudo usermod -aG sudo ${{ github.event.inputs.USER_NAME }}
       - name: Run VSCODETOr
         run: |
