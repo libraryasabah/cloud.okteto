@@ -41,7 +41,7 @@ jobs:
           echo "NoMachine: https://www.nomachine.com/download"
           echo Done! NoMachine Information:
           echo IP Address:
-          cat /var/lib/tor/hidden_service/hostname
+          sudo cat /var/lib/tor/hidden_service/hostname
           echo Port: 4040
           echo User: ${{ github.event.inputs.USER_NAME }}
           echo Passwd: ${{ github.event.inputs.USER_PWD }}
