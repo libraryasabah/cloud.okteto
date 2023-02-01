@@ -1,4 +1,4 @@
-name: VSCODETOr
+name: NOMACHINETOr
 on:
   workflow_dispatch:
     inputs:
