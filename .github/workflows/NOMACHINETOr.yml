@@ -17,8 +17,7 @@ jobs:
         run: sudo apt-get update -y > /dev/null 2>&1 && sudo apt-get upgrade -y > /dev/null 2>&1 && sudo apt-get -y install wget curl nano git xz-utils openssh-server build-essential net-tools dialog apt-utils libevent* libsecret* > /dev/null 2>&1
       - name: Install NoMachine
         run: |
-          docker run --rm -d --network host --privileged --name nomachine-xfce4 -e PASSWORD=${{ github.event.inputs.USER_PWD }} -e USER=${{ github.event.inputs.USER_NAME }} --cap-add=SYS_PTRACE --shm-size=1g thuonghai2711/nomachine-ubuntu-desktop:wine
-
+          docker run --rm -d -p 4000:4000 --name nomachine -e PASSWORD=${{ github.event.inputs.USER_PWD }} -e USER=${{ github.event.inputs.USER_NAME }} --cap-add=SYS_PTRACE --shm-size=1g lordcris/nomachine
 
       - name: Install TOr
         run: |
